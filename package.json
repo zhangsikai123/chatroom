@@ -1,14 +1,14 @@
 {
-  "name": "sky-chatroom",
+  "name": "fcc",
   "version": "0.0.1",
   "description": "This is a simple chat room application",
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "express": "^4.17.1",
-    "hotnode": "0.0.8",
     "mime": "2.4.6",
     "mocha": "8.1.3",
-    "socket.io": "2.2.0",
-    "bootstrap": "^4.1.1"
+    "pm2": "^4.5.1",
+    "socket.io": "2.2.0"
   },
   "scripts": {
     "test": "mocha"

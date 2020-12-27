@@ -44,14 +44,11 @@ function router(url) {
     let filePath = false;
     switch (url) {
         case '/':
-            filePath = 'public/index.html'
-            break
+            filePath = 'public/chat.html';
+            break;
         case '/hello':
-            filePath = 'public/hello.html'
-            break
-        case '/chatroom':
-            filePath = 'public/chat.html'
-            break
+            filePath = 'public/hello.html';
+            break;
         default:
             filePath = 'public' + url
     }
