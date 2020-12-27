@@ -37,9 +37,6 @@ function serveStatic(response, cache, absPathOfStatic) {
     // }
 }
 
-
-port = 3000;
-
 function router(url) {
     let filePath = false;
     switch (url) {
@@ -57,10 +54,11 @@ function router(url) {
 
 mainServer = http.createServer(function (request, response) {
     console.debug('got request ' + request.method + ':' + request.url);
-    filePath = router(request.url)
+    filePath = router(request.url);
     let absPathOfStatic = './' + filePath;
     serveStatic(response, cache, absPathOfStatic)
 }).listen(port, function () {
+    let port = 8081;
     console.log('server is starting at port: ' + port)
 });
 
