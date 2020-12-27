@@ -1,0 +1,16 @@
+{
+  "name": "sky-chatroom",
+  "version": "0.0.1",
+  "description": "This is a simple chat room application",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hotnode": "0.0.8",
+    "mime": "2.4.6",
+    "mocha": "8.1.3",
+    "socket.io": "2.2.0",
+    "bootstrap": "^4.1.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
