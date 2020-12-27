@@ -3,6 +3,8 @@ let http = require('http');
 let mime = require('mime');
 let path = require('path');
 let cache = {};
+let port = 8081;
+
 
 function send404(response) {
     response.writeHead(404, {'content-type': 'text/plain'});
@@ -58,9 +60,7 @@ mainServer = http.createServer(function (request, response) {
     let absPathOfStatic = './' + filePath;
     serveStatic(response, cache, absPathOfStatic)
 }).listen(port, function () {
-    let port = 8081;
     console.log('server is starting at port: ' + port)
 });
-
 
 let chatServer = require('./lib/chat_server').listen(mainServer);
