@@ -3,6 +3,7 @@ uiSendMessages = '#send-message';
 uiSendForm = '#send-form';
 uiRoom = '#room';
 uiRoomList = '#room-list';
+uiUserList = '#users-list';
 
 function displayMessageTime() {
   const date = new Date().toDateString();
@@ -83,7 +84,6 @@ $(document).ready(function() {
     $(uiMessages).append(divSystemContentElement(message));
   });
 
-
   socket.on('joinResult', function(result) {
     $(uiRoom).text(result.room);
     messages = $(uiMessages);
@@ -108,13 +108,22 @@ $(document).ready(function() {
         $(uiRoomList).append(room);
       }
     }
-    //    $(uiRoomList + ' div').click(function() {
-  //    chatApp.processCommand('/join ' + $(this).text());
-    //   $(uiSendMessages).focus();
-    // });
+  });
+  socket.on('friendsList', function(result) {
+    users = result.users;
+    $(uiUserList).empty();
+    for (let i=0; i<users.length; i++) {
+      user = users[i];
+      avatar = user.avatar;
+      name = user.name;
+      $(uiUserList).append(renderUser(avatar, name));
+    }
   });
   setInterval(function() {
     socket.emit('rooms');
+  }, 1000);
+  setInterval(function() {
+    socket.emit('friendsList');
   }, 1000);
   $(uiSendMessages).focus();
   $(uiSendForm).submit(function() {
