@@ -10,36 +10,39 @@ function displayMessageTime() {
   return time + '   ' + date;
 }
 
+function renderUser(avatar, name) {
+  return `<div class="chat-user"><img class="chat-avatar"
+src="${avatar}" alt=""><div class="chat-user-name">
+<a href="#">${name}</a></div></div>`;
+}
 
+function renderMessage(me, message, avatar, name) {
+  if (me) {
+    place = 'right';
+    id = 'mine-message';
+  } else {
+    place = 'left';
+    id = 'other-message';
+  }
+  return `<div class="chat-message ${place}" id="${id}">
+<img class="message-avatar" src="${avatar}" alt="">
+<div class="message"><a class="message-author" href="#">${name}
+</a><span class="message-date"> ${displayMessageTime()} </span>
+<span class="message-content">${message}</span></div>`;
+}
 function divEscapedContentElement(message, avatar, name) {
-  return '<div class="outgoing_msg">  <span class="outgoing_msg_nick_name">' +
-    name + '</span> <div class="outgoing_msg_img"> <img src="' +
-    avatar + '" alt="message"></div> <div class="sent_msg"> <p>' +
-    message + '</p> <span class="time_date">' +
-    displayMessageTime() +
-    '</span> </div></div>';
+  return renderMessage(true, message, avatar, name);
 }
 
 
 function divEscapedOtherChatContentElement(message, avatar, name) {
-  return '<div class="incoming_msg">  <span class="incoming_msg_nick_name">' +
-    name + '</span> <div class="incoming_msg_img"><img src="' +
-    avatar + '" alt="message"></div> <div class'+
-    '="received_msg"> <div class="received_withd_msg"> <p>' +
-    message + '</p> <span class="time_date">' +
-    displayMessageTime() +
-    '</span></div> </div> </div>';
+  return renderMessage(false, message, avatar, name);
 }
 
 function divSystemContentElement(message) {
-  return '<div class="incoming_msg">  <span class="incoming_msg_nick_name">'+
-    ' crazy system </span><div class="incoming_msg_img">'+
-    '<img src="/avatars/system/5fe731ebdb0b513a664976f6.jpg"' +
-    'alt="system"></div> <div class="received_msg">'+
-    '<div class="received_withd_msg"> <p>' +
-    message + '</p><span class="time_date">' +
-    displayMessageTime() +
-    '</span> </div> </div>';
+  const avatar = '/avatars/system/5fe731ebdb0b513a664976f6.jpg';
+  const name = 'crazy system';
+  return renderMessage(false, message, avatar, name);
 }
 
 function processUserInput(chatApp, socket, currentRoom, yourName, yourAvatar) {
@@ -85,9 +88,10 @@ $(document).ready(function() {
     $(uiRoom).text(result.room);
     messages = $(uiMessages);
     messages.empty();
-    messages.append(divSystemContentElement(`你来到了 ${ result.room }.`));
+    messages.append(divSystemContentElement(`welcome to ${ result.room }.`));
     currentRoom = result.room;
   });
+
   socket.on('message', function(message) {
     const newElement = divEscapedOtherChatContentElement(
         message.text, message.avatar, message.name);
@@ -105,8 +109,8 @@ $(document).ready(function() {
       }
     }
     //    $(uiRoomList + ' div').click(function() {
-    // chatApp.processCommand('/join ' + $(this).text());
-    // $(uiSendMessages).focus();
+  //    chatApp.processCommand('/join ' + $(this).text());
+    //   $(uiSendMessages).focus();
     // });
   });
   setInterval(function() {

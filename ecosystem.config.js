@@ -1,7 +1,7 @@
 module.exports = {
-    apps: [{
-        name: "fcc",
-        script: "./server.js",
-        instances: 1,
-    }]
+  apps: [{
+    name: 'fcc',
+    script: './server.js',
+    instances: 1,
+  }],
 };

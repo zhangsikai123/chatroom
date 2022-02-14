@@ -4,7 +4,7 @@ img{ max-width:100%;}
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
-    width: 40%; border-right:1px solid #c4c4c4;
+    width: 20%; border-right:1px solid #c4c4c4;
 }
 .inbox_msg {
     border: 1px solid #c4c4c4;
@@ -20,7 +20,7 @@ img{ max-width:100%;}
 .recent_heading {float: left; width:40%;}
 .srch_bar {
     display: inline-block;
-    text-align: right;
+    text-align: left;
     width: 60%;
 }
 .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
@@ -66,7 +66,7 @@ img{ max-width:100%;}
 .mesgs {
     float: left;
     padding: 30px 15px 0 25px;
-    width: 60%;
+    width: 80%;
 }
 
 
@@ -169,8 +169,8 @@ img{ max-width:100%;}
     font-size: 17px;
     height: 33px;
     position: absolute;
-    right: 0;
-    top: 11px;
+    right: 10;
+    top: 9px;
     width: 33px;
 }
 .messaging { padding: 0 0 50px 0;}
