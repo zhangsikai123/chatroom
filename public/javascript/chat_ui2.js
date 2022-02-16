@@ -63,21 +63,29 @@ function processUserInput(chatApp, socket, currentRoom, yourName, yourAvatar) {
   $(uiSendMessages).val('');
 }
 
+function initApp(){
+
+}
+
 const socket = io.connect();
 
-
 $(document).ready(function() {
-  const chatApp = new Chat(socket);
   let currentRoom = '';
   let yourName;
   let yourAvatar;
-
+  const chatApp = new Chat(socket);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  let name = urlParams.get('name');
+  if(name != null){
+    chatApp.changeName(name);
+  }
   socket.on('nameResult', function(result) {
     let message;
     if (result.success) {
       yourName = result.name;
       yourAvatar = result.avatar;
-      message = '欢迎加入我们, <b>' + yourName + '</b>.';
+      message = 'welcome, <b>' + yourName + '</b>.';
     } else {
       message = result.message;
     }

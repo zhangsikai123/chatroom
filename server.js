@@ -1,8 +1,10 @@
+const chatServer = require('./lib/chat_server');
 const fs = require('fs');
 const http = require('http');
 const mime = require('mime');
 const path = require('path');
 const cache = {};
+const user = {};
 const port = 60001;
 
 
@@ -37,18 +39,23 @@ function serveStatic(response, cache, absPathOfStatic) {
 
 function router(url) {
   let filePath = false;
-  switch (url) {
-    case '/':
+  while (true) {
+    if (url == '/'){
       filePath = 'public/chat.html';
       break;
-    case '/new':
+    }
+    if (url.startsWith('/new')){
       filePath = 'public/chat2.html';
       break;
-    case '/hello':
+    }
+    if( url == '/hello'){
       filePath = 'public/hello.html';
       break;
-    default:
+    }
+    else{
       filePath = 'public' + url;
+      break;
+    }
   }
   return filePath;
 }
@@ -61,6 +68,4 @@ mainServer = http.createServer(function(request, response) {
 }).listen(port, function() {
   console.log('server is starting at port: ' + port);
 });
-
-const chatServer = require('./lib/chat_server');
 chatServer.listen(mainServer);

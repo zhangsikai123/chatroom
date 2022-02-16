@@ -73,7 +73,7 @@ $(document).ready(function() {
     if (result.success) {
       yourName = result.name;
       yourAvatar = result.avatar;
-      message = '欢迎加入我们, <b>' + yourName + '</b>.';
+      message = 'welcome, <b>' + yourName + '</b>.';
     } else {
       message = result.message;
     }
