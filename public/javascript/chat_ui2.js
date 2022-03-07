@@ -35,7 +35,6 @@ function divEscapedContentElement(message, avatar, name) {
   return renderMessage(true, message, avatar, name);
 }
 
-
 function divEscapedOtherChatContentElement(message, avatar, name) {
   return renderMessage(false, message, avatar, name);
 }
@@ -63,10 +62,6 @@ function processUserInput(chatApp, socket, currentRoom, yourName, yourAvatar) {
   $(uiSendMessages).val('');
 }
 
-function initApp(){
-
-}
-
 const socket = io.connect();
 
 $(document).ready(function() {
@@ -77,19 +72,12 @@ $(document).ready(function() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   let name = urlParams.get('name');
-  if(name != null){
-    chatApp.changeName(name);
-  }
-  socket.on('nameResult', function(result) {
+  chatApp.login(name);
+
+  socket.on('userInfo', function(result) {
     let message;
-    if (result.success) {
-      yourName = result.name;
-      yourAvatar = result.avatar;
-      message = 'welcome, <b>' + yourName + '</b>.';
-    } else {
-      message = result.message;
-    }
-    $(uiMessages).append(divSystemContentElement(message));
+    yourName = result.name;
+    yourAvatar = result.avatar;
   });
 
   socket.on('joinResult', function(result) {
@@ -117,6 +105,7 @@ $(document).ready(function() {
       }
     }
   });
+
   socket.on('friendsList', function(result) {
     users = result.users;
     $(uiUserList).empty();
@@ -127,12 +116,14 @@ $(document).ready(function() {
       $(uiUserList).append(renderUser(avatar, name));
     }
   });
+
   setInterval(function() {
     socket.emit('rooms');
   }, 1000);
   setInterval(function() {
     socket.emit('friendsList');
   }, 1000);
+
   $(uiSendMessages).focus();
   $(uiSendForm).submit(function() {
     processUserInput(chatApp, socket, currentRoom, yourName, yourAvatar);

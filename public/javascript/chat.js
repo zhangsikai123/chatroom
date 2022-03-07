@@ -2,6 +2,12 @@ const Chat = function(socket) {
   this.socket = socket;
 };
 
+Chat.prototype.login = function(name) {
+  this.socket.emit('login', {
+    name:name
+  });
+};
+
 Chat.prototype.changeName = function(name) {
   this.socket.emit('changeNameAttempt', name);
 };
