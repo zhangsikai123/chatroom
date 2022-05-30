@@ -64,6 +64,11 @@ body{margin-top:20px;}
 .chat-message {
   padding: 10px 20px;
 }
+
+.message-author {
+    font-size:15px;
+}
+
 .message-avatar {
   height: 48px;
   width: 48px;
@@ -88,6 +93,9 @@ body{margin-top:20px;}
   position: relative;
   border-radius: 4px;
 }
+
+
+
 .chat-discussion .chat-message.left .message-date {
   float: right;
 }

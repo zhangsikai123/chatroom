@@ -12,9 +12,9 @@ Chat.prototype.changeName = function(name) {
   this.socket.emit('changeNameAttempt', name);
 };
 
-Chat.prototype.sendMessage = function(room, text) {
+Chat.prototype.sendMessage = function(room, text, type) {
   const message = {
-    room: room, text: text,
+    room: room, text: text, type: type,
   };
   this.socket.emit('message', message);
 };

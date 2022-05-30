@@ -31,6 +31,22 @@ function renderMessage(me, message, avatar, name) {
 </a><span class="message-date"> ${displayMessageTime()} </span>
 <span class="message-content">${message}</span></div>`;
 }
+
+function renderImageMessage(me, imgSrc, avatar, name) {
+  if (me) {
+    place = 'right';
+    id = 'mine-message';
+  } else {
+    place = 'left';
+    id = 'other-message';
+  }
+  return `<div class="chat-message ${place}" id="${id}">
+<img class="message-avatar" src="${avatar}" alt="">
+<div class="message"><a class="message-author" href="#">${name}
+</a><span class="message-date"> ${displayMessageTime()} </span>
+<img class="message-content" alt="" src="/image/${imgSrc}"></div>`;
+}
+
 function divEscapedContentElement(message, avatar, name) {
   return renderMessage(true, message, avatar, name);
 }
@@ -54,7 +70,7 @@ function processUserInput(chatApp, socket, currentRoom, yourName, yourAvatar) {
       $(uiMessages).append(divSystemContentElement(message));
     }
   } else {
-    chatApp.sendMessage(currentRoom, message);
+    chatApp.sendMessage(currentRoom, message, 'text');
     const messages = $(uiMessages);
     messages.append(divEscapedContentElement(message, yourAvatar, yourName));
     messages.scrollTop(messages.prop('scrollHeight'));
@@ -71,9 +87,10 @@ $(document).ready(function() {
   const chatApp = new Chat(socket);
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
+  uploader = new SocketIOFileUpload(socket);
+  uploader.listenOnInput(document.getElementById("siofu_input"));
   let name = urlParams.get('name');
   chatApp.login(name);
-
   socket.on('userInfo', function(result) {
     let message;
     yourName = result.name;
@@ -88,9 +105,26 @@ $(document).ready(function() {
     currentRoom = result.room;
   });
 
+  uploader.addEventListener('complete', function(event) {
+    message = event.detail;
+    imgsrc = message.imgsrc;
+    const newElement = renderImageMessage(
+      true, message.imgsrc, message.avatar, message.name);
+    messages = $(uiMessages);
+    messages.append(newElement);
+    messages.scrollTop(messages.prop('scrollHeight'));
+    chatApp.sendMessage(currentRoom, imgsrc, 'img');
+  });
+
   socket.on('message', function(message) {
-    const newElement = divEscapedOtherChatContentElement(
-        message.text, message.avatar, message.name);
+    var newElement;
+    if (message.type == 'img'){
+      newElement = renderImageMessage(
+      false, message.text, message.avatar, message.name);
+    } else {
+      newElement = divEscapedOtherChatContentElement(
+      message.text, message.avatar, message.name);
+    }
     messages = $(uiMessages);
     messages.append(newElement);
     messages.scrollTop(messages.prop('scrollHeight'));
