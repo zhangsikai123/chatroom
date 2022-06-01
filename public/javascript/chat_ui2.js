@@ -5,6 +5,14 @@ uiRoom = '#room';
 uiRoomList = '#room-list';
 uiUserList = '#users-list';
 
+function dropHandler(ev) {
+  console.log(ev);
+}
+
+function allowDrop(ev){
+  ev.preventDefault();
+}
+
 function displayMessageTime() {
   const date = new Date().toDateString();
   const time = new Date().toLocaleTimeString();
@@ -32,7 +40,7 @@ function renderMessage(me, message, avatar, name) {
 <span class="message-content">${message}</span></div>`;
 }
 
-function renderImageMessage(me, imgSrc, avatar, name) {
+function renderImageMessage(me, imgsrc, avatar, name) {
   if (me) {
     place = 'right';
     id = 'mine-message';
@@ -44,7 +52,7 @@ function renderImageMessage(me, imgSrc, avatar, name) {
 <img class="message-avatar" src="${avatar}" alt="">
 <div class="message"><a class="message-author" href="#">${name}
 </a><span class="message-date"> ${displayMessageTime()} </span>
-<img class="message-content" alt="" src="/image/${imgSrc}"></div>`;
+<div class="img-message" ><img alt="" src="/image/${imgsrc}" width="30%"/></div></div>`;
 }
 
 function divEscapedContentElement(message, avatar, name) {
@@ -88,6 +96,8 @@ $(document).ready(function() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   uploader = new SocketIOFileUpload(socket);
+  uploader.listenOnDrop(document.getElementById("messages"));
+  uploader.listenOnDrop(document.getElementById("send-form"));
   uploader.listenOnInput(document.getElementById("siofu_input"));
   let name = urlParams.get('name');
   chatApp.login(name);
