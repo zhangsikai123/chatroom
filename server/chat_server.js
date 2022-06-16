@@ -6,7 +6,6 @@ const systemName = 'crazy system';
 const socketio = require('socket.io');
 const currentRoom = {};
 
-
 function handleUserLogin(socket) {
   socket.on('login', function(user) {
     console.log(`${user.name} login`);

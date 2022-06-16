@@ -1,4 +1,4 @@
-chatUser = require('../lib/chat_users.js');
+chatUser = require('../server/chat_users.js');
 assert = require('assert');
 // start mocha test
 describe('User', function() {

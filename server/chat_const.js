@@ -1,14 +1,14 @@
 exports.adjectives =function(){return [
-  '种族歧视者',
-  '内裤撕裂者',
+  '有趣的',
+  '忧郁的',
   '疯狂的',
-  '中年油腻的',
+  '油腻的',
   '忧郁的',
   '打工人',
   '暴躁的',
   '搞笑的',
-  '喜欢说fuck的',
-  '笑起来很猥琐的',
+  '喜欢打喷嚏的',
+  '笑起来很阳光的',
   '欠扁的',
 ]};
 exports.nouns = function(){return [
@@ -21,7 +21,6 @@ exports.nouns = function(){return [
   'bitch',
   '尼哥',
   '麦克',
-  'tiger the nigger',
   '东莞仔',
   '铁柱',
   '龟孙儿',

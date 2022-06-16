@@ -81,7 +81,7 @@ exports.generateAvatar = function () {
   if (cache['allAvatars'] !== undefined) {
     allAvatars = cache['allAvatars'];
   } else {
-    allAvatars = getAllAvatars('./public/avatars/');
+    allAvatars = getAllAvatars('./client/avatars/');
     cache['allAvatars'] = allAvatars;
   }
   if (avatarUsed.length === allAvatars.length) {

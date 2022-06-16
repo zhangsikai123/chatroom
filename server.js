@@ -3,15 +3,16 @@ const path = require('path');
 const http = require('http');
 const siofu = require("socketio-file-upload");
 const app = express();
-
-const chatServer = require('./lib/chat_server');
+const chatServer = require('./server/chat_server');
 const port = 60001;
-app.use(express.static(__dirname + '/public'));
-app.use(siofu.router);
 const multer = require('multer');
 const imageUpload = multer({
     dest: 'images',
 });
+const server = http.createServer(app);
+
+app.use(express.static(__dirname + '/client'));
+app.use(siofu.router);
 
 app.post('/', function (req, res) {
   res.send('POST request to the homepage');
@@ -27,7 +28,7 @@ app.get('/image/:filename', (req, res) => {
   return res.sendFile(fullfilepath);
 });
 
-const server = http.createServer(app);
+
 chatServer.listen(server);
 server.listen(port, () => {
   console.log(`listening on *:${port}`);
