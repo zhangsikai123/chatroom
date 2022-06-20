@@ -4,4 +4,4 @@ WORKDIR /app
 COPY . /app
 RUN npm install
 USER root
-ENTRYPOINT ["pm2", "start", "all"]
+ENTRYPOINT ["node", "server"]
