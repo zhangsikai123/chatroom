@@ -80,7 +80,6 @@ $(document).ready(function() {
     $(uiMessages).append(divSystemContentElement(message));
   });
 
-
   socket.on('joinResult', function(result) {
     $(uiRoom).text(result.room);
     messages = $(uiMessages);
@@ -88,6 +87,7 @@ $(document).ready(function() {
     messages.append(divSystemContentElement(`你来到了 ${ result.room }.`));
     currentRoom = result.room;
   });
+
   socket.on('message', function(message) {
     const newElement = divEscapedOtherChatContentElement(
         message.text, message.avatar, message.name);

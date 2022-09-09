@@ -98,7 +98,6 @@ $(document).ready(function() {
   uploader = new SocketIOFileUpload(socket);
   uploader.listenOnDrop(document.getElementById("messages"));
   uploader.listenOnDrop(document.getElementById("send-form"));
-  uploader.listenOnInput(document.getElementById("siofu_input"));
   let name = urlParams.get('name');
   chatApp.login(name);
   socket.on('userInfo', function(result) {
